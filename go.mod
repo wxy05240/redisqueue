@@ -1,4 +1,4 @@
-module github.com/wxy05240/redisqueue/v2
+module github.com/wxy05240/redisqueues/v2
 
 go 1.21
 
