@@ -1,7 +1,8 @@
 package redisqueue
 
 import (
-	"github.com/go-redis/redis/v7"
+	"context"
+	"github.com/redis/go-redis/v9"
 )
 
 // ProducerOptions provide options to configure the Producer.
@@ -80,12 +81,12 @@ func (p *Producer) Enqueue(msg *Message) error {
 		Stream: msg.Stream,
 		Values: msg.Values,
 	}
-	if p.options.ApproximateMaxLength {
-		args.MaxLenApprox = p.options.StreamMaxLength
-	} else {
-		args.MaxLen = p.options.StreamMaxLength
-	}
-	id, err := p.redis.XAdd(args).Result()
+	//if p.options.ApproximateMaxLength {
+	//	args.MaxLenApprox = p.options.StreamMaxLength
+	//} else {
+	args.MaxLen = p.options.StreamMaxLength
+	//}
+	id, err := p.redis.XAdd(context.TODO(), args).Result()
 	if err != nil {
 		return err
 	}
